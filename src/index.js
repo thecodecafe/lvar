@@ -51,7 +51,7 @@ function lvar(initialValue)
         }
     }
 
-    this.on = function on(key, callback)
+    this.addListener = function addListener(key, callback)
     {
         if(listners.hasOwnProperty(key))
         {
@@ -77,7 +77,7 @@ function lvar(initialValue)
         listners[key] = callback;
     }
 
-    this.off = function off(key)
+    this.removeListener = function removeListener(key)
     {
         if(getType(key) != 'string')
         {
