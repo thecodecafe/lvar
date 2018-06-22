@@ -1,7 +1,7 @@
 {
   "name": "lvar",
   "version": "1.0.0",
-  "description": "Listenable variables made easy",
+  "description": "Listenable javascript object with more goodies.",
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
