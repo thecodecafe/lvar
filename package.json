@@ -1,0 +1,30 @@
+{
+  "name": "lvar",
+  "version": "1.0.0",
+  "description": "Listenable variables made easy",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel src --out-dir lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thecodecafe/lvar.git"
+  },
+  "keywords": [
+    "javacript",
+    "variable",
+    "listenable",
+    "untility"
+  ],
+  "author": "Daniel Barde <mrbarde2k@gmail.com> (http://github.com/mrbarde2k)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thecodecafe/lvar/issues"
+  },
+  "homepage": "https://github.com/thecodecafe/lvar#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.7.0"
+  }
+}
