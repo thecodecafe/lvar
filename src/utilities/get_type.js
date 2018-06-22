@@ -1,4 +1,4 @@
-const getTypes = function(value)
+export default function getTypes(value)
 {
             if(typeof value === 'string') return 'string';
             if(typeof value === 'number') return 'number';
@@ -9,5 +9,3 @@ const getTypes = function(value)
           if(value.constructor === Array) return 'array';
             if(typeof value === 'object') return 'object';
 };
-
-export default getTypes;

@@ -4,7 +4,7 @@
   "description": "Listenable javascript object with more goodies.",
   "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "babel src --out-dir lib",
     "bundle": "webpack --config webpack.config.js"
   },
@@ -27,11 +27,14 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.26.3",
+    "babel-jest": "^23.0.1",
     "babel-loader": "^7.1.4",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-preset-env": "^1.7.0",
+    "jest": "^23.1.0",
+    "regenerator-runtime": "^0.11.1",
     "uglifyjs-webpack-plugin": "^1.2.6",
     "webpack": "^4.12.0",
     "webpack-cli": "^3.0.8"
-  },
-  "dependencies": {}
+  }
 }
