@@ -3,57 +3,32 @@ import getType from './utilities/get_type';
 function lvar(initialValue)
 {
     // setup properties
-    this.type       = getType(initialValue);
-    this.nativeType = typeof(initialValue);
-    var value       = initialValue;
-    var listners    = {};
-    var paused      = false;
-    var prevValue;
+    this.type         = getType(initialValue);
+    var value         = initialValue;
+    var paused        = false;
+    this.nativeType   = typeof(initialValue);
+    var subscriptions = {};
 
-    this.set = function set(newValue, force)
+    this.val = function val(newValue)
     {
-        force = force ? true : false;
+        // get current value
         let currentValue = value;
 
         // get value types
         var valueType = getType(newValue);
-        var currentValueType = getType(currentValue);
 
-        // update value if forced or niether object nor array
-        if(force || valueType != 'object' && valueType != 'array')
-        {
-            value           = newValue;
-            this.type       = valueType;
-            prevValue       = currentValue;
-            this.nativeType = typeof(value);
-            fireListeners();
-            return;
-        }
+        // update value
+        value           = newValue;
+        this.type       = valueType;
+        this.nativeType = typeof(value);
 
-        // update properties if is an object
-        if(valueType == 'object' && currentValueType == 'object')
-        {
-            value           = Object.assign({}, value, newValue);
-            prevValue       = currentValue;
-            this.type       = valueType;
-            this.nativeType = typeof(newValue);
-            return;
-        }
-
-        // concatinate if is an array
-        if(valueType == 'array' && currentValueType == 'array')
-        {
-            value           = value.concat(newValue);
-            prevValue       = currentValue;
-            this.type       = valueType;
-            this.nativeType = typeof(newValue);
-            return;
-        }
+        // notify subscribers
+        notifySubscribers(currentValue);
     }
 
-    this.addListener = function addListener(key, callback)
+    this.subscribe = function subscribe(key, callback)
     {
-        if(listners.hasOwnProperty(key))
+        if(subscriptions.hasOwnProperty(key))
         {
             var error = new Error(`A listener with key ${key} already exists.`);
             console.error(error);
@@ -74,10 +49,10 @@ function lvar(initialValue)
             return;
         }
 
-        listners[key] = callback;
+        subscriptions[key] = callback;
     }
 
-    this.removeListener = function removeListener(key)
+    this.unsubscribe = function unsubscribe(key)
     {
         if(getType(key) != 'string')
         {
@@ -86,29 +61,29 @@ function lvar(initialValue)
             return;
         }
 
-        if(listners.hasOwnProperty(key))
+        if(subscriptions.hasOwnProperty(key))
         {
-            delete listners[key];
+            delete subscriptions[key];
         }
     }
 
     this.destroy = function destroy()
     {
-        listners = {};
+        subscriptions = {};
     }
 
-    function fireListeners()
+    function notifySubscribers(prevValue)
     {
         if(paused) return;
-        var keys = Object.keys(listners);
+        var keys = Object.keys(subscriptions);
         for(var i = 0; i < keys; i++)
         {
             if(getType(keys[i]) == 'function')
             {
                 keys[i]({
-                    value: value, 
-                    prevValue: prevValue, 
-                    valueType: getType(value),
+                    value        : value, 
+                    valueType    : getType(value),
+                    prevValue    : prevValue, 
                     prevValueType: getType(prevValue),
                 });
             }

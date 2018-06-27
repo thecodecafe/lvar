@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
@@ -6,6 +7,11 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'dist'),
         filename: 'lvar.js'
+    },
+    resolve: {
+        alias: {
+            'lva': path.join(__dirname, 'libs/index.js')
+        }
     },
     module: {
         rules: [
@@ -23,6 +29,9 @@ module.exports = {
     },
     mode: 'production',
     plugins: [
+        new webpack.ProvidePlugin({
+            'lvar': 'lvar'
+        }),
         new UglifyJsPlugin()
     ]
 }
